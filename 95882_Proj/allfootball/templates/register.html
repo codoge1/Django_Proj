@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+    {% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">ALL HERE IS FOOTBALL!</h1>
+        {% if registered %}
+        <h1>Thank you for registering!</h1>
+        <a href="{% url "app:topics" %}"><button type="button" class="btn btn-success">Begin your discussion right now!</button></a>
+        {% else %}
+        <p class="lead">Please fill in following information to register.</p>
+        <hr class="my-4">
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form user_form %}
+            {% bootstrap_form userInfo_form %}
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a href="{% url 'app:user_login' %}"><button type="button" class="btn btn-warning">Switch to Login</button></a>
+          </form>
+          {% endif %}
+    </div>
+    {% endblock %}

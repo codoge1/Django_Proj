@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1 style="text-align:center">{{ topic.title }}</h1></br>
+        <h2 style="text-align:left">{{ topic.content }}</h2>
+        <p style="text-align:right"><em>{{ topic.author }} at {{ topic.date }}</em></p>
+        <ul>
+            {% for comment in topic.comments.all %}
+            <li><p><strong>{{ comment.content }}</strong></p>
+                 <p style="text-align:right"><em>By {{ comment.author }} at {{ comment.date }}</em></p>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control"  name="comment" placeholder="Leave your comment here..." required/></br>
+            <input type="hidden" name="topic_id" value={{ topic.id }} />
+            <button type="submit" class="btn btn-success">Comment</button>
+        </div>
+        </form>
+        {% else %}
+        <h3>Please Login to Comment</h3></br>
+        <a href="{% url "app:user_login" %}"><button type="button" class="btn btn-success">Go to Login</button></a>
+        {% endif %}
+    </div>
+{% endblock %}

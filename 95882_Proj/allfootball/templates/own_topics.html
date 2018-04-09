@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>Manage topics of your own:</h1>
+        <ul class="list-group">
+            {% for topic in topics %}
+            <a href="{{ topic.id }}"><li class="list-group-item"><h2>{{ topic.title }}</h2></li></a>
+            <em style="text-align:right"><p>By {{ topic.author.username }} at {{ topic.date }}</p></em>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'app:new_topic' %}"><button type="button" class="btn btn-success">New Topic</button></a>
+        <a href="{% url 'app:topics' %}"><button type="button" class="btn btn-warning">Back</button></a>
+    </div>
+{% endblock %}
