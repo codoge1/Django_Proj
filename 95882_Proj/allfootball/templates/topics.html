@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
     <div class="jumbotron">
         <h1>Latest Hot Topics:</h1>
@@ -6,6 +7,10 @@
             {% for topic in topics %}
             <a href="{{ topic.id }}"><li class="list-group-item"><h2>{{ topic.title }}</h2></li></a>
             <em style="text-align:right"><p>By {{ topic.author.username }} at {{ topic.date }}</p></em>
+            <div style="text-align:right">
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                <i class="fa fa-heart" aria-hidden="true"></i>
+            </div>
             {% endfor %}
         </ul>
         {% if user.is_authenticated %}

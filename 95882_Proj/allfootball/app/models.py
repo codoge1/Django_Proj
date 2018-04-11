@@ -24,10 +24,10 @@ class Topic(models.Model):
     author = models.ForeignKey(User, related_name = 'author', on_delete=models.CASCADE)
     date = models.DateField(auto_now = False, auto_now_add = True)
 
-    likes = models.BigIntegerField()
-    favorates = models.BigIntegerField()
-    favorate_by = models.ManyToManyField(User)
-    tags = models.ManyToManyField(Tag)
+    likes = models.BigIntegerField(blank=True, null=True)
+    favorates = models.BigIntegerField(blank=True, null=True)
+    favorate_by = models.ManyToManyField(User, blank=True, null=True)
+    tags = models.ManyToManyField(Tag, blank=True, null=True)
 
 
     def __str__(self):
