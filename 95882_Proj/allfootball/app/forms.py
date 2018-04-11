@@ -17,6 +17,7 @@ class UserInfoForm(forms.ModelForm):
 
 class TopicForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea)
+    tags = forms.CharField(label="Tags (Use single space to split several tags)", widget=forms.TextInput(attrs={'placeholder':'Tags'}))
     class Meta():
         model = Topic
         fields = ('title', 'content',)

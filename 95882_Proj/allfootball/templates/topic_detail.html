@@ -22,11 +22,14 @@
             <input type="text" class="form-control"  name="comment" placeholder="Leave your comment here..." required/></br>
             <input type="hidden" name="topic_id" value={{ topic.id }} />
             <button type="submit" class="btn btn-success">Comment</button>
+            <a href="{% url 'app:topics' %}"><button type="button" class="btn btn-warning">Back</button></a>
         </div>
         </form>
         {% else %}
         <h3>Please Login to Comment</h3></br>
         <a href="{% url "app:user_login" %}"><button type="button" class="btn btn-success">Go to Login</button></a>
+        <a href="{% url 'app:topics' %}"><button type="button" class="btn btn-warning">Back</button></a>
         {% endif %}
+
     </div>
 {% endblock %}
