@@ -4,6 +4,10 @@
         <h1 style="text-align:center">{{ topic.title }}</h1></br>
         <h2 style="text-align:left">{{ topic.content }}</h2>
         <p style="text-align:right"><em>{{ topic.author }} at {{ topic.date }}</em></p>
+        <div style="text-align:right">
+                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                <i class="fa fa-heart" aria-hidden="true"></i>
+            </div>
         <ul>
             {% for comment in topic.comments.all %}
             <li><p><strong>{{ comment.content }}</strong></p>
