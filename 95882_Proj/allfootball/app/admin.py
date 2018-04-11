@@ -5,3 +5,4 @@ from . import models
 admin.site.register(models.UserInfo)
 admin.site.register(models.Topic)
 admin.site.register(models.Comment)
+admin.site.register(models.Tag)

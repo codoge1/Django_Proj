@@ -9,12 +9,26 @@ class UserInfo(models.Model):
     def __str__(self):
         return self.user.username
 
+class Tag(models.Model):
+
+    label = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return self.label
+
+
 class Topic(models.Model):
 
     title = models.CharField(max_length = 256)
     content = models.CharField(max_length = 3000)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name = 'author', on_delete=models.CASCADE)
     date = models.DateField(auto_now = False, auto_now_add = True)
+
+    likes = models.BigIntegerField()
+    favorates = models.BigIntegerField()
+    favorate_by = models.ManyToManyField(User)
+    tags = models.ManyToManyField(Tag)
+
 
     def __str__(self):
         return self.title
