@@ -64,6 +64,15 @@ def new_topic(request):
         topic = topic_form.save(commit=False)
         topic.author = author
         topic.save()
+        #split tags
+        tag_data = topic_form.cleaned_data['tags']
+        tags = tag_data.split()
+        for tag in tags:
+            item = models.Tag()
+            item.label = tag
+            item.save()
+            topic.tags.add(item)
+        topic.save()
         return HttpResponseRedirect(reverse('app:topics'))
 
     else:
@@ -85,6 +94,8 @@ def user_login(request):
         else:
             return HttpResponse("Woops!Your username doesn't match password!")
     else:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('app:topics'))
         return render(request, 'login.html')
 
 @login_required
