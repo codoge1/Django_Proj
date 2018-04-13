@@ -26,8 +26,8 @@ class Topic(models.Model):
 
     likes = models.BigIntegerField(blank=True, null=True)
     favorates = models.BigIntegerField(blank=True, null=True)
-    favorate_by = models.ManyToManyField(User, blank=True, null=True)
-    tags = models.ManyToManyField(Tag, blank=True, null=True)
+    favorate_by = models.ManyToManyField(User, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
 
     def __str__(self):

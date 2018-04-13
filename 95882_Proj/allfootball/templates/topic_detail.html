@@ -4,10 +4,22 @@
         <h1 style="text-align:center">{{ topic.title }}</h1></br>
         <h2 style="text-align:left">{{ topic.content }}</h2>
         <p style="text-align:right"><em>{{ topic.author }} at {{ topic.date }}</em></p>
-        <div style="text-align:right">
-                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                <i class="fa fa-heart" aria-hidden="true"></i>
+        <div>
+            <div style="float:left">
+                    <i class="fa fa-tags" aria-hidden="true"></i>
+                    {% for tag in topic.tags.all %}
+                    {{ tag.label }}
+                    {% endfor %}
             </div>
+            <div style="float: right">
+                <i class="fa fa-thumbs-o-up" aria-hidden="true" id="likes" topic_id="{{ topic.id }}" onclick="increase_likes()"></i>
+                <span id="likes_count">{{ topic.likes }}</span>
+                <i class="fa fa-heart" aria-hidden="true" id='favorates' topic_id="{{ topic.id }}" onclick="increase_favorates()"></i>
+                <span id="favorates_count">{{ topic.favorates }}</span>
+            </div>
+        </br>
+        </div>
+    </br>
         <ul>
             {% for comment in topic.comments.all %}
             <li><p><strong>{{ comment.content }}</strong></p>

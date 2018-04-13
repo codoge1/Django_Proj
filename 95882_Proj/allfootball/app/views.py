@@ -63,6 +63,8 @@ def new_topic(request):
 
         topic = topic_form.save(commit=False)
         topic.author = author
+        topic.likes = 0
+        topic.favorates = 0
         topic.save()
         #split tags
         tag_data = topic_form.cleaned_data['tags']
@@ -135,3 +137,38 @@ def register(request):
 
 def homepage(request):
     return render(request, 'homepage.html')
+
+@login_required
+def increase_likes(request):
+    topic_id = -1
+    if request.method == "GET":
+        topic_id = request.GET.get('id')
+    topic = models.Topic.objects.get(id=int(topic_id))
+    topic.likes += 1
+    topic.save()
+    return HttpResponse(topic.likes)
+
+@login_required
+def increase_favorates(request):
+    topic_id = -1
+    if request.method == "GET":
+        topic_id = request.GET.get('id')
+    topic = models.Topic.objects.get(id=int(topic_id))
+    topic.favorates += 1
+
+    user = request.user
+    topic.favorate_by.add(user)
+
+    topic.save()
+    return HttpResponse(topic.favorates)
+
+
+class FavorateListView(ListView):
+    model = models.Topic
+    template_name = 'favorate_topics.html'
+    context_object_name = 'topics'
+
+    def get_queryset(self):
+        user = self.request.user
+        topics = user.topic_set.all()   #topic_set  -> auto create by manytomany fields
+        return topics

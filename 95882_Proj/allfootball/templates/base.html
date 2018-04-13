@@ -13,6 +13,7 @@
       integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static "js/votes.js" %}"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,6 +31,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url "app:own_topics" %}">Own Topics</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url "app:favorate_topics" %}">Favorate Topics</a>
+              </li>
           </ul>
             <a href="{% url 'app:user_logout' %}"><button class="btn btn-outline-danger my-2 my-sm-0" type="button">Logout</button></a>
           {% else %}
@@ -45,6 +49,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url "app:redirect_login" %}">Own Topics</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "app:redirect_login" %}">Favorate Topics</a>
+                  </li>
               </ul>
             <a href="{% url 'app:user_login' %}"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Login / Register</button></a>
           {% endif %}

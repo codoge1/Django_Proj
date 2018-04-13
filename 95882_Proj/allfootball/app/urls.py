@@ -14,5 +14,8 @@ urlpatterns = [
     path('own_topics/', views.OwnTopicListView.as_view(), name='own_topics'),
     path('new_topic/', views.new_topic, name='new_topic'),
     path('redirect_login/', views.to_login, name='redirect_login'),
+    path('increase_likes/', views.increase_likes, name='increase_likes'),
+    path('increase_favorates/', views.increase_favorates, name='increase_favorates'),
+    path('favorate_topics/', views.FavorateListView.as_view(), name='favorate_topics'),
     re_path(r'(?P<pk>[-\w]+)/$', views.TopicDetailView.as_view(), name='topic_detail'),
 ]
