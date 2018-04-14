@@ -17,5 +17,6 @@ urlpatterns = [
     path('increase_likes/', views.increase_likes, name='increase_likes'),
     path('increase_favorates/', views.increase_favorates, name='increase_favorates'),
     path('favorate_topics/', views.FavorateListView.as_view(), name='favorate_topics'),
+    path('search/', views.SearchListView.as_view(), name='search'),
     re_path(r'(?P<pk>[-\w]+)/$', views.TopicDetailView.as_view(), name='topic_detail'),
 ]

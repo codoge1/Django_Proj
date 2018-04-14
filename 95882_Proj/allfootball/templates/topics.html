@@ -1,15 +1,16 @@
 {% extends "base.html" %}
-{% load static %}
 {% block content %}
     <div class="jumbotron">
         <h1>Latest Hot Topics:</h1></br>
-        <form>
+        <form method="GET" action="{% url "app:search" %}">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="search">Search</label>
-                <input type="text" class="form-control" id="search" placeholder="Search...">
+                <input type="text" class="form-control" id="search" name="content" placeholder="Search..."></br>
+                <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
-        <ul class="list-group">
+        <ul class="list-group" id="list">
             {% for topic in topics %}
             <a href="{{ topic.id }}"><li class="list-group-item"><h2>{{ topic.title }}</h2></li></a>
             <em style="text-align:right"><p>By {{ topic.author.username }} at {{ topic.date }}</p></em>

@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View, TemplateView, ListView, DetailView
 from . import models
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -17,7 +18,7 @@ class OwnTopicListView(ListView):
 
 
     def get_queryset(self):
-        return models.Topic.objects.filter(author=self.request.user)
+        return models.Topic.objects.filter(author=self.request.user).order_by('-favorates', '-likes', '-date')
 
 
 class TopicListView(ListView):
@@ -25,6 +26,7 @@ class TopicListView(ListView):
     model = models.Topic
     template_name = 'topics.html'
     context_object_name = 'topics'
+    queryset = models.Topic.objects.order_by('-favorates', '-likes', '-date')
 
 class TopicDetailView(DetailView):
 
@@ -170,5 +172,33 @@ class FavorateListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        topics = user.topic_set.all()   #topic_set  -> auto create by manytomany fields
+        topics = user.topic_set.all().order_by('-favorates', '-likes', '-date')   #topic_set  -> auto create by manytomany fields
         return topics
+
+
+class SearchListView(ListView):
+    
+    model = models.Topic
+    template_name = 'search_results.html'
+    context_object_name = 'topics'
+
+    def get_queryset(self):
+
+        content = ''
+        qs = models.Topic.objects.none()
+
+        if self.request.method == 'GET':
+            content = self.request.GET.get('content')
+            strs = content.split()
+            for s in strs:
+
+                tag_topics = models.Topic.objects.filter(tags__label__icontains=s)
+                qs = qs.union(tag_topics)
+
+                content_topics = models.Topic.objects.filter(content__icontains=s)
+                qs = qs.union(content_topics)
+
+                title_topics = models.Topic.objects.filter(title__icontains=s)
+                qs = qs.union(title_topics)
+
+        return qs.order_by('-favorates', '-likes', '-date')

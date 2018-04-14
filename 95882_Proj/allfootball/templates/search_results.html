@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>Your Search Results:</h1>
+        <i>Based on tags, titles and contents</i></br></br>
+        <ul class="list-group">
+            {% for topic in topics %}
+            <a href="{{ topic.id }}"><li class="list-group-item"><h2>{{ topic.title }}</h2></li></a>
+            <em style="text-align:right"><p>By {{ topic.author.username }} at {{ topic.date }}</p></em>
+            <div>
+                <div style="float:left">
+                    <i class="fa fa-tags" aria-hidden="true"></i>
+                    {% for tag in topic.tags.all %}
+                    {{ tag.label }}
+                    {% endfor %}
+                </div>
+                <div style="float:right">
+                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    {{ topic.likes }}
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    {{ topic.favorates }}
+                </div>
+            </br>
+            </br>
+            </div>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'app:new_topic' %}"><button type="button" class="btn btn-success">New Topic</button></a>
+        <a href="{% url 'app:topics' %}"><button type="button" class="btn btn-warning">Back</button></a>
+    </div>
+{% endblock %}

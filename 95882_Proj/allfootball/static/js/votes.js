@@ -11,3 +11,4 @@ function increase_favorates() {
         $('#favorates_count').html(data)
     })
 }
+
