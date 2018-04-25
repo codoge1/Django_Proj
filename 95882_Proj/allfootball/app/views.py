@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View, TemplateView, ListView, DetailView
 from . import models
 from django.views.decorators.csrf import csrf_exempt
+from static.commonWords import commonWords
 
 # Create your views here.
 
@@ -22,7 +23,7 @@ class OwnTopicListView(ListView):
 
 
 class TopicListView(ListView):
-
+    
     model = models.Topic
     template_name = 'topics.html'
     context_object_name = 'topics'
@@ -96,7 +97,7 @@ def user_login(request):
             login(request, user)
             return HttpResponseRedirect(reverse('app:topics'))
         else:
-            return HttpResponse("Woops!Your username doesn't match password!")
+            return render(request, 'login_fail.html')
     else:
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('app:topics'))
@@ -190,8 +191,10 @@ class SearchListView(ListView):
         if self.request.method == 'GET':
             content = self.request.GET.get('content')
             strs = content.split()
+            print(strs)
             for s in strs:
-
+                if s in commonWords:            #filter
+                    continue
                 tag_topics = models.Topic.objects.filter(tags__label__icontains=s)
                 qs = qs.union(tag_topics)
 
